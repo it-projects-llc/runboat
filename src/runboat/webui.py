@@ -14,23 +14,7 @@ from .settings import settings
 router = APIRouter()
 
 
-FOOTER_HTML = """\
-<p>
-    <a href="https://github.com/sbidoul/runboat">Runboat</a> ☸️ -
-    created with ❤️ for
-    <a href="https://odoo-community.org">
-        <img src="https://odoo-community.org/logo.png"
-             style="height: 1em; vertical-align: text-bottom;"
-        ></a>
-    by Stéphane Bidoul with support of
-    <a href="https://acsone.eu">
-        <img src="https://acsone.eu/logo.png"
-             style="height: 1em; vertical-align: text-bottom;"
-        ></a>.
-    Copyright © Runboat
-    <a href="https://github.com/sbidoul/runboat/graphs/contributors">contributors</a>.
-</p>
-"""
+FOOTER_HTML = ""
 
 
 def mount(app: FastAPI) -> None:

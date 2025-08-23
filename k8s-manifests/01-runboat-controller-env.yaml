@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: runboat-controller-env
+  namespace: runboat
+data:
+  RUNBOAT_BUILD_ENV: '{"PGHOST":"runboat-postgres-rw","PGPORT":"5432","PGUSER":"runboat"}'
+  RUNBOAT_BUILD_NAMESPACE: runboat-builds
+  RUNBOAT_MAX_DEPLOYED: "20"
+  RUNBOAT_MAX_INITIALIZING: "20"
+  RUNBOAT_MAX_STARTED: "10"
+  RUNBOAT_BUILD_TEMPLATE_VARS: |
+    {
+      "storageClassName": "microk8s-hostpath"
+    }

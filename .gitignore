@@ -1,5 +1,8 @@
 tmp/
 src/runboat/kubefiles/kustomization.yaml
+kubeconfig
+.DS_Store
+**/*runboat-secrets.env
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -130,3 +133,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+

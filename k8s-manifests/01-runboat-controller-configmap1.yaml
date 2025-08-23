@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+data:
+  log-config.yaml: |
+    version: 1
+    disable_existing_loggers: false
+    formatters:
+      rich:
+        datefmt: "[%X]"
+        format: "%(message)s [%(name)s]"
+    handlers:
+      console:
+        class: rich.logging.RichHandler
+        level: NOTSET
+        formatter: rich
+        rich_tracebacks: true
+        show_path: false
+    root:
+      level: DEBUG
+      handlers: [console]
+    loggers:
+      kubernetes.client.rest:
+        level: INFO
+      sse_starlette.sse:
+        level: INFO
+metadata:
+  name: runboat-controller-configmap1
+  namespace: runboat
+  annotations:
+    use-subpath: "true"

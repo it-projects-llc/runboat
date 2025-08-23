@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: runboat-controller-deployment
+  namespace: runboat
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: runboat-controller
+  template:
+    metadata:
+      labels:
+        app: runboat-controller
+    spec:
+      containers:
+        - name: runboat-controller
+          image: secretagentnull/runboat-controller:v1.4
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: runboat-controller-env
+            - secretRef:
+                name: runboat-secrets
+          volumeMounts:
+            - mountPath: /etc/runboat-log-config.yaml
+              name: runboat-controller-configmap1
+              readOnly: true
+              subPath: runboat-log-config.yaml
+      restartPolicy: Always
+      volumes:
+        - configMap:
+            items:
+              - key: log-config.yaml
+                path: runboat-log-config.yaml
+            name: runboat-controller-configmap1
+          name: runboat-controller-configmap1

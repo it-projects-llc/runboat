@@ -11,20 +11,6 @@ RUN curl -L \
 COPY requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
-ENV RUNBOAT_REPOS='[{"repo": "^oca/.*", "branch": "^15.0$", "builds": [{"image": "ghcr.io/oca/oca-ci/py3.8-odoo15.0:latest"}]}]'
-ENV RUNBOAT_API_ADMIN_USER="admin"
-ENV RUNBOAT_API_ADMIN_PASSWD="admin"
-ENV RUNBOAT_BUILD_NAMESPACE=runboat-builds
-ENV RUNBOAT_BUILD_DOMAIN=runboat-builds.example.com
-ENV RUNBOAT_BUILD_ENV='{"PGHOST": "postgres14.runboat-builds-db", "PGPORT": "5432", "PGUSER": "runboat-build"}'
-ENV RUNBOAT_BUILD_SECRET_ENV='{"PGPASSWORD": "..."}'
-ENV RUNBOAT_BUILD_TEMPLATE_VARS='{}'
-ENV RUNBOAT_BUILD_DEFAULT_KUBEFILES_PATH=
-ENV RUNBOAT_GITHUB_TOKEN=
-ENV RUNBOAT_GITHUB_WEBHOOK_SECRET=
-ENV RUNBOAT_BASE_URL=https://runboat.example.com
-ENV RUNBOAT_ADDITIONAL_FOOTER_HTML=''
-
 # KUBECONFIG to be provided by user, unless running in cluster with a service account
 # having the necessary permissions.
 

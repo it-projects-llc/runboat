@@ -1,0 +1,16 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: runboat-postgres
+  namespace: runboat-builds
+spec:
+  instances: 1
+  storage:
+    size: 5Gi
+  bootstrap:
+    initdb:
+      database: runboat
+      secret:
+        name: runboat-secrets
+      postInitSQL:
+        - "ALTER ROLE runboat CREATEDB;"

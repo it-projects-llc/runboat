@@ -24,6 +24,12 @@ spec:
                 name: odoosecretenv
             - configMapRef:
                 name: odooenv
+          env:
+            - name: GITHUB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: runboat-secrets
+                  key: RUNBOAT_GITHUB_TOKEN
           args: ["bash", "/runboat/runboat-initialize.sh"]
           resources:
             limits:

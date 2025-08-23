@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: runboat-controller-ingress-redirect
+  namespace: runboat
+  annotations:
+    nginx.ingress.kubernetes.io/permanent-redirect: https://runboat.domain.com/webui/builds.html
+spec:
+  rules:
+  - host: runboat.domain.com
+    http:
+      paths:
+      - path: /
+        pathType: Exact
+        backend:
+          service:
+            name: runboat-controller-service
+            port:
+              number: 8080

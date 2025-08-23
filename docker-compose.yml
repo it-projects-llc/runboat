@@ -9,21 +9,13 @@ services:
     environment:
       KUBECONFIG: /kubeconfig
       RUNBOAT_BUILD_NAMESPACE: runboat-builds  # the kubernetes namespaces where builds are deployed
-      RUNBOAT_API_ADMIN_USER: admin  # the admin user for some API operations
-      RUNBOAT_API_ADMIN_PASSWD: admin
+      RUNBOAT_API_ADMIN_USER: ${RUNBOAT_API_ADMIN_USER}  # the admin user for some API operations
+      RUNBOAT_API_ADMIN_PASSWD: ${RUNBOAT_API_ADMIN_PASSWD}
       RUNBOAT_MAX_INITIALIZING: 20
       RUNBOAT_MAX_STARTED: 100
       RUNBOAT_MAX_DEPLOYED: 1000
-      RUNBOAT_BUILD_ENV: |
-        {
-          "PGHOST": "test.it-projects.info",
-          "PGPORT": "5432",
-          "PGUSER": "runboat"
-        }
-      RUNBOAT_BUILD_SECRET_ENV: |
-        {
-          "PGPASSWORD": ""
-        }
+      RUNBOAT_BUILD_ENV: ${RUNBOAT_BUILD_ENV}
+      RUNBOAT_BUILD_SECRET_ENV: ${RUNBOAT_BUILD_SECRET_ENV}
       RUNBOAT_BUILD_TEMPLATE_VARS: |
         {
           "storageClassName": "microk8s-hostpath"
@@ -32,23 +24,7 @@ services:
       RUNBOAT_BASE_URL: http://test.it-projects.info:8000
       # domain suffix for builds
       RUNBOAT_BUILD_DOMAIN: test.it-projects.info
-      RUNBOAT_GITHUB_TOKEN:
-      RUNBOAT_GITHUB_WEBHOOK_SECRET:
-      RUNBOAT_ADDITIONAL_FOOTER_HTML: |
-        <p>
-           Controller and builds running on OCA infrastructure,
-           thanks to <a href="https://odoo-community.org/members">members</a>
-           and <a href="https://odoo-community.org/partners">sponsors</a> support.
-        </p>
-      RUNBOAT_REPOS: |
-        [
-          {
-            "repo": "it-projects-llc/bacula-addons/*",
-            "branch": "^16.0$$",
-            "builds": [
-              {
-                "image": "ghcr.io/oca/oca-ci/py3.10-odoo16.0:latest"
-              }
-            ]
-          }
-        ]
+      RUNBOAT_GITHUB_TOKEN: ${RUNBOAT_GITHUB_TOKEN}
+      RUNBOAT_GITHUB_WEBHOOK_SECRET: ${RUNBOAT_GITHUB_WEBHOOK_SECRET}
+      RUNBOAT_ADDITIONAL_FOOTER_HTML:
+      RUNBOAT_REPOS: ${RUNBOAT_REPOS}
