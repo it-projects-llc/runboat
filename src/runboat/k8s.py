@@ -200,10 +200,12 @@ def _render_kubefiles(
         _logger.debug("kubefiles path: %s", kubefiles_path)
         # TODO async copytree, or make this whole _render_kubefiles run_in_executor
         shutil.copytree(kubefiles_path, tmp_path, dirs_exist_ok=True)
-        template = Template((tmp_path / "kustomization.yaml.jinja").read_text())
-        (tmp_path / "kustomization.yaml").write_text(
-            template.render(dict(deployment_vars))
-        )
+        for template_path in tmp_path.rglob("*.jinja"):
+            template = Template(template_path.read_text())
+            template_path.with_suffix("").write_text(
+                template.render(dict(deployment_vars))
+            )
+            template_path.unlink()
         yield tmp_path
 
 
@@ -241,14 +243,13 @@ async def deploy(kubefiles_path: Path | None, deployment_vars: DeploymentVars) -
         )
 
 
-async def delete_resources(build_name: str) -> None:
-    # TODO delete all resources with runboat/build label
+async def delete_deployment_resources(build_name: str) -> None:
     await _kubectl(
         [
             "-n",
             settings.build_namespace,
             "delete",
-            "configmap,deployment,ingress,job,secret,service,pvc",
+            settings.deployment_resource_types,
             "-l",
             f"runboat/build={build_name}",
             "--wait=false",
