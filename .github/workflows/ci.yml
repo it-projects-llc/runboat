@@ -12,8 +12,8 @@ jobs:
       matrix:
         python-version: ["3.13"]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install project
@@ -24,7 +24,7 @@ jobs:
         run: pytest -v --cov --cov-report=xml ./tests
       - name: Run mypy
         run: mypy ./src/runboat ./tests
-      - uses: codecov/codecov-action@v1
+      - uses: codecov/codecov-action@v5
   build-image:
     runs-on: ubuntu-latest
     needs:
@@ -40,7 +40,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           tags: |
             ghcr.io/${{ github.repository }}:latest
