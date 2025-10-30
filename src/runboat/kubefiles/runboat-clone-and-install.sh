@@ -76,6 +76,22 @@ if [ -f "external_repos.txt" ]; then # Download all external repositories listed
             echo "No specific modules listed for ${EXTERNAL_REPO_NAME}. Keeping all modules from this repository."
         fi
 
+        set +x
+        echo "Copying Odoo modules from ${EXTERNAL_REPO_TEMP_DIR} to ${ADDONS_DIR}"
+        for item in "${EXTERNAL_REPO_TEMP_DIR}"/*; do
+            if [ -d "$item" ]; then # Check if it's a directory
+                if [ -f "${item}/__manifest__.py" ] || [ -f "${item}/__openerp__.py" ]; then
+                    cp -r "$item" "${ADDONS_DIR}/" || { echo "Error: Failed to copy module $item to ADDONS_DIR." >&2; rm -fr "${EXTERNAL_REPO_TEMP_DIR}"; exit 1; }
+                else
+                    echo "  Skipping directory ${item} as it does not appear to be an Odoo module."
+                fi
+            fi
+        done
+
+        # Clean up the temporary directory for this specific repo
+        echo "Cleaning up temporary directory: ${EXTERNAL_REPO_TEMP_DIR}"
+        rm -fr "${EXTERNAL_REPO_TEMP_DIR}"
+        set -x
 
     done < "external_repos.txt"
 else
