@@ -28,7 +28,7 @@ spec:
             - name: GITHUB_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: runboat-secrets
+                  name: runboat-secret
                   key: RUNBOAT_GITHUB_TOKEN
           args: ["bash", "/runboat/runboat-initialize.sh"]
           resources:
