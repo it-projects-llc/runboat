@@ -2,6 +2,7 @@ from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 
 from . import __version__, api, controller, k8s, webhooks, webui
 
@@ -25,3 +26,9 @@ app.include_router(webhooks.router, tags=["webhooks"])
 app.include_router(webui.router, tags=["webui"])
 
 webui.mount(app)
+
+
+@app.get("/")
+async def root() -> RedirectResponse:
+    """Redirect root path to the main builds webpage."""
+    return RedirectResponse(url="/webui/builds.html")
